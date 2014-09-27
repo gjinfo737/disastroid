@@ -3,7 +3,6 @@ package com.aj.games.disastroid.obstacle;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Point;
 import android.graphics.Rect;
 
 import com.aj.games.disastroid.levels.Leveler.ILevelListener;
@@ -53,9 +52,9 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
     }
 
     private void populate() {
-	Point location;
-	int diameter;
-	// obstacles.add(new Obstacle(location, diameter, center))
+	// Point center =
+	// int diameter = 10;
+	// obstacles.add(new Obstacle(null, diameter, center));
 
     }
 
