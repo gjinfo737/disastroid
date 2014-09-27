@@ -2,8 +2,6 @@ package com.aj.games.disastroid.ship;
 
 import java.util.Random;
 
-import android.util.Log;
-
 public class Ship {
 	private boolean isClockwise; // Direction the ship is rotating
 	private int health;			 // HP of the Ship
@@ -38,6 +36,9 @@ public class Ship {
 		health -= hitAmount;
 		if (health <= 0) { /*TODO game over */ }
 	}
+	
+	/* GETTERS */
+	public int getAngle() { return angle; }
 	
 	/* SETTERS */
 	public void changeRotation() {
