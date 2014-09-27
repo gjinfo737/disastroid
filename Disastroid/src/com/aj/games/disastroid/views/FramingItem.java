@@ -1,22 +1,39 @@
 package com.aj.games.disastroid.views;
 
-public class FramingItem {
-    private int[] frames;
-    private int frameIndex = 0;
+import android.content.Context;
 
-    public FramingItem(int[] frames) {
-	this.frames = frames;
+public class FramingItem {
+    private int frameIndex = 1;
+    private String prefix;
+    private int numberOfFrames;
+
+    public FramingItem(String prefix, int numberOfFrames) {
+	this.prefix = prefix;
+	this.numberOfFrames = numberOfFrames;
     }
 
     public void incrementFrame() {
-	if (frameIndex < frames.length - 1) {
+	if (frameIndex < numberOfFrames) {
 	    frameIndex++;
 	} else {
-	    frameIndex = 0;
+	    frameIndex = 1;
 	}
     }
 
-    public int getCurrentFrame() {
-	return this.frames[this.frameIndex];
+    public int getCurrentFrame(Context context) {
+
+	String numberStr = String.format("%04d", frameIndex);
+	String idStr = this.prefix + numberStr;
+
+	return getDrawableeId(idStr, context);
+    }
+
+    public static int getDrawableeId(String idStr, Context context) {
+	try {
+	    return context.getResources().getIdentifier(idStr, "drawable", context.getPackageName());
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return -1;
+	}
     }
 }

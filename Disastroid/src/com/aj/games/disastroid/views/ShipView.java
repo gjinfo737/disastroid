@@ -26,7 +26,7 @@ public class ShipView extends ImageView {
     private Bitmap bm;
     private FramingItem framingItem;
     private List<Obstacle> obstacles;
-    private Bitmap icon;
+    private Bitmap asteroid;
 
     public ShipView(Context context) {
 	super(context);
@@ -46,15 +46,16 @@ public class ShipView extends ImageView {
     private void init() {
 	this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	this.paint.setStrokeWidth(5f);
-	icon = BitmapFactory.decodeResource(getResources(), drawable.ic_launcher);
+	asteroid = BitmapFactory.decodeResource(getResources(), drawable.asteroid);
 	canvasDrawer = new CanvasDrawer();
-	framingItem = new FramingItem(new int[] { drawable.ship_0001, drawable.ship_0002 });
+	framingItem = new FramingItem("kitty2d_ship_", 10);
     }
 
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
 	PointF center = getCenter(canvas);
+	canvas.drawColor(Color.BLACK);
 
 	if (isInEditMode()) {
 	    paint.setColor(Color.CYAN);
@@ -62,14 +63,14 @@ public class ShipView extends ImageView {
 	    paint.setColor(Color.MAGENTA);
 	    canvas.drawLine(center.x - 100f, center.y, center.x + 100f, center.y, paint);
 	} else if (this.ship != null) {
-	    bm = BitmapFactory.decodeResource(getResources(), this.framingItem.getCurrentFrame());
-	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getLeftWingAngle(), bm, true);
 
 	    for (int i = 0; i < this.obstacles.size(); i++) {
 		Point obCenter = this.obstacles.get(i).getCenter();
 		float zoomPercent = this.obstacles.get(i).getZoomPct() / 100f;
-		canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, icon, true);
+		this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, asteroid, true);
 	    }
+	    bm = BitmapFactory.decodeResource(getResources(), this.framingItem.getCurrentFrame(getContext()));
+	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getLeftWingAngle(), bm, true);
 	}
     }
 
