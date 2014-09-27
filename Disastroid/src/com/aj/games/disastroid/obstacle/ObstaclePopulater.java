@@ -106,8 +106,11 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
 	@Override
 	public void onLevelUp(int level) {
 		this.level = level;
-		chanceOfPopulate = .1f * level;
-		Log.i("", "Levelled up to level " + level);
+		chanceOfPopulate = (float) (0.1 * level);
+		
+		if (chanceOfPopulate > 0.9) { chanceOfPopulate = 0.9f; }
+		Log.i("Level", "Levelled up to level " + level);
+		Log.i("Level", "Chance of population is now " + chanceOfPopulate);
 	}
 
 	public List<Obstacle> getObstacles() {
