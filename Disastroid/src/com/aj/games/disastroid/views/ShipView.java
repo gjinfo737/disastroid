@@ -19,6 +19,7 @@ public class ShipView extends ImageView {
     private Ship ship;
     private CanvasDrawer canvasDrawer;
     private Bitmap bm;
+    private FramingItem framingItem;
 
     public ShipView(Context context) {
 	super(context);
@@ -38,8 +39,9 @@ public class ShipView extends ImageView {
     private void init() {
 	this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	this.paint.setStrokeWidth(5f);
-	bm = BitmapFactory.decodeResource(getResources(), drawable.ic_launcher);
-	canvasDrawer = new CanvasDrawer(getResources());
+
+	canvasDrawer = new CanvasDrawer();
+	framingItem = new FramingItem(new int[] { drawable.ship_0001, drawable.ship_0002 });
     }
 
     @Override
@@ -52,13 +54,16 @@ public class ShipView extends ImageView {
 	    paint.setColor(Color.MAGENTA);
 	    canvas.drawLine(center.x - 100f, center.y, center.x + 100f, center.y, paint);
 	} else if (this.ship != null) {
-	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getAngle(), bm);
+	    bm = BitmapFactory.decodeResource(getResources(), this.framingItem.getCurrentFrame());
+	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getAngle(), bm, true);
 	}
     }
 
     public void render(Ship ship) {
 	this.ship = ship;
 	this.invalidate();
+
+	this.framingItem.incrementFrame();
     }
 
     private PointF getCenter(Canvas canvas) {
