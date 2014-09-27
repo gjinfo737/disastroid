@@ -1,9 +1,10 @@
 package com.aj.games.disastroid.login;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-public class LoginActivity extends Activity {
+import com.aj.games.disastroid.BaseActivity;
+
+public class LoginActivity extends BaseActivity {
 
     private LoginPresenter loginPresenter;
 

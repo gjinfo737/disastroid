@@ -1,9 +1,10 @@
 package com.aj.games.disastroid.play;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-public class PlayActivity extends Activity {
+import com.aj.games.disastroid.BaseActivity;
+
+public class PlayActivity extends BaseActivity {
 
     private PlayPresenter playPresenter;
 

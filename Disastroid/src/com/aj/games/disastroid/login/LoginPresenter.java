@@ -13,7 +13,7 @@ public class LoginPresenter {
     public LoginPresenter(Activity activity) {
 	this.activity = activity;
 	this.view = new LoginView(this, activity);
-
+	onLoginSuccess();
     }
 
     public void login(String username, String password) {
