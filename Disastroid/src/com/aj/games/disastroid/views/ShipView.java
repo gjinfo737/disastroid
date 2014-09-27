@@ -8,12 +8,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.AttributeSet;
-import android.view.View;
+import android.widget.ImageView;
 
 import com.aj.games.disastroid.R.drawable;
 import com.aj.games.disastroid.ship.Ship;
 
-public class ShipView extends View {
+public class ShipView extends ImageView {
 
     private Paint paint;
     private Ship ship;
@@ -44,7 +44,6 @@ public class ShipView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-	super.onDraw(canvas);
 	PointF center = getCenter(canvas);
 
 	if (isInEditMode()) {

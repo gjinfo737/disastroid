@@ -32,7 +32,7 @@ public class PlayActivity extends BaseActivity {
 
 	int action = event.getAction();
 	if (action == MotionEvent.ACTION_DOWN) {
-
+	    this.playPresenter.onTap();
 	    return true;
 	}
 

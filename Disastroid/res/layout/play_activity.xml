@@ -5,7 +5,7 @@
     tools:context="com.aj.games.disastroid.MainActivity" >
 
     <com.aj.games.disastroid.views.ShipView
-        android:id="@+id/imageView1"
+        android:id="@+id/shipview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
