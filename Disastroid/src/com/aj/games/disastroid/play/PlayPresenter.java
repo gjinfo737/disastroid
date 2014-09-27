@@ -45,4 +45,8 @@ public class PlayPresenter implements ITickerTimerListener {
 	this.tickerTimer.stop();
     }
 
+    public void onTap() {
+	// TODO Auto-generated method stub
+    }
+
 }
