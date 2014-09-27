@@ -11,6 +11,7 @@ import android.view.Display;
 import android.widget.Toast;
 
 import com.aj.games.disastroid.levels.Leveler;
+import com.aj.games.disastroid.obstacle.Obstacle;
 import com.aj.games.disastroid.obstacle.ObstaclePopulater;
 import com.aj.games.disastroid.ship.Ship;
 import com.aj.games.disastroid.time.TickerTimer;
@@ -72,6 +73,26 @@ public class PlayPresenter implements ITickerTimerListener {
 	activity.runOnUiThread(new Runnable() {
 	    public void run() {
 		view.update(ship);
+	    }
+	});
+	detectCollisions();
+    }
+
+    private void detectCollisions() {
+	List<Obstacle> obstacles = this.obstaclePopulater.getObstacles();
+	for (int i = 0; i < obstacles.size(); i++) {
+	    if (!obstacles.get(i).hasPassed()) {
+		if (obstacles.get(i).isHittingShip(ship)) {
+		    onShipHit(obstacles.get(i));
+		}
+	    }
+	}
+    }
+
+    private void onShipHit(Obstacle obstacle) {
+	activity.runOnUiThread(new Runnable() {
+	    public void run() {
+		Toast.makeText(activity, "HIT!", Toast.LENGTH_SHORT).show();
 	    }
 	});
     }

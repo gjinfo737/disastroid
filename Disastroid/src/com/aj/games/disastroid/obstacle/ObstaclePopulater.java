@@ -49,7 +49,33 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
 	    if (Math.random() < chanceOfPopulate) {
 		populate();
 	    }
+	    while (!cleanObstaclesList()) {
+	    }
 	}
+    }
+
+    private boolean cleanObstaclesList() {
+	if (obstacles == null)
+	    return true;
+	if (obstacles.size() == 0) {
+	    return true;
+	}
+
+	int removeIndex = -1;
+	for (int i = 0; i < obstacles.size(); i++) {
+	    Obstacle ob = obstacles.get(i);
+	    if (ob.hasPassed()) {
+		removeIndex = i;
+		break;
+	    }
+	}
+	if (removeIndex != -1) {
+	    obstacles.remove(removeIndex);
+	    return false;
+	} else {
+	    return true;
+	}
+
     }
 
     private void populate() {
@@ -73,6 +99,10 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
     public void onLevelUp(int level) {
 	this.level = level;
 
+    }
+
+    public List<Obstacle> getObstacles() {
+	return obstacles;
     }
 
 }
