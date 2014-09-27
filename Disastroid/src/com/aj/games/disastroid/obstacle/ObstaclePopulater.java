@@ -3,6 +3,7 @@ package com.aj.games.disastroid.obstacle;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Point;
 import android.graphics.Rect;
 
 import com.aj.games.disastroid.levels.Leveler.ILevelListener;
@@ -52,10 +53,20 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
     }
 
     private void populate() {
-	// Point center =
-	// int diameter = 10;
-	// obstacles.add(new Obstacle(null, diameter, center));
+	obstacles.add(new Obstacle((int) radius, createRandomPointOnCircle()));
+    }
 
+    private Point createRandomPointOnCircle() {
+	Point point = new Point();
+	float angle = (float) (Math.random() * 360f);
+	while (this.safeArea.isInArea(angle)) {
+	    angle = (float) (Math.random() * 360f);
+	}
+
+	point.x = (int) (radius * Math.cos(angle));
+	point.y = (int) (radius * Math.sin(angle));
+
+	return point;
     }
 
     @Override
