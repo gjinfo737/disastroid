@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.aj.games.disastroid.R.id;
+import com.aj.games.disastroid.R.layout;
 
 public class LoginView {
 
@@ -19,7 +20,7 @@ public class LoginView {
     public LoginView(LoginPresenter presenter, Activity activity) {
 	this.presenter = presenter;
 	this.activity = activity;
-
+	this.activity.setContentView(layout.login_activity);
 	this.btnLogin = (Button) this.activity.findViewById(id.btnLogin);
 	this.etUsername = (EditText) this.activity.findViewById(id.etUsername);
 	this.etPassword = (EditText) this.activity.findViewById(id.etPassword);
