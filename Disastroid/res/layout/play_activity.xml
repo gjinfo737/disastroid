@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.aj.games.disastroid.MainActivity" >
 
-    <com.aj.games.disastroid.views.SpaceShipView
+    <com.aj.games.disastroid.views.ShipView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
