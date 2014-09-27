@@ -67,9 +67,8 @@ public class ShipView extends ImageView {
 
 	    for (int i = 0; i < this.obstacles.size(); i++) {
 		Point obCenter = this.obstacles.get(i).getCenter();
-		// float zoomPercent = this.obstacles.get(i).getZoomPct() /
-		// 100f;
-		canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, 1f, icon, true);
+		float zoomPercent = this.obstacles.get(i).getZoomPct() / 100f;
+		canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, icon, true);
 	    }
 	}
     }

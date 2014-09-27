@@ -21,7 +21,7 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
     private SafeArea safeArea;
     private float safeAreaChangePeriod = 10;
     private float populatePeriod = .5f;
-    private float chanceOfPopulate = .1f;
+    private float chanceOfPopulate = .5f;
 
     public ObstaclePopulater(Rect populationRect) {
 	this.populationRect = populationRect;

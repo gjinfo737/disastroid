@@ -12,88 +12,90 @@ import com.aj.games.disastroid.ship.Ship;
  * wing's center is within that zone, it is considered a hit.
  */
 public class Obstacle {
-	private Point center;
-	private int diameter;
-	private int zoomPct;
-	private int zoomSpeed;
-	private int damage;
+    private Point center;
+    private int diameter;
+    private int zoomPct;
+    private int zoomSpeed;
+    private int damage;
 
-	public final int DEFAULT_ZOOM_SPD = 1;
-	public final int ANGLE_DELTA_FOR_HIT = 5; //TODO Calculate based on diameter?
-	public final int DEFAULT_DMG = 10;
-	
-	public Obstacle(int diameter, Point center) {
-		this.center = center;
-		this.diameter = diameter;
-		this.zoomSpeed = DEFAULT_ZOOM_SPD;
-		this.zoomPct = 0;
-		this.damage = DEFAULT_DMG;
-	}
+    public final int DEFAULT_ZOOM_SPD = 2;
+    public final int ANGLE_DELTA_FOR_HIT = 5; // TODO Calculate based on
+					      // diameter?
+    public final int DEFAULT_DMG = 10;
 
-	public void onUpdate() {
-		zoomPct += zoomSpeed;
-	}
+    public Obstacle(int diameter, Point center) {
+	this.center = center;
+	this.diameter = diameter;
+	this.zoomSpeed = DEFAULT_ZOOM_SPD;
+	this.zoomPct = 0;
+	this.damage = DEFAULT_DMG;
+    }
 
-	public boolean hasPassed() {
-		return (zoomPct >= 100);
-	}
+    public void onUpdate() {
+	zoomPct += zoomSpeed;
+    }
 
-	// Obstacles will always be set distance away from ship, so if the angle of the ship's
-	// left or right wing is within a delta of the center of the obstacle, that means it is 
-	// colliding with that obstacle. 
-	public boolean isHittingShip(Ship ship) {
-		if (zoomPct < 90) {
-			return false;
-		}
+    public boolean hasPassed() {
+	return (zoomPct >= 100);
+    }
 
-		int angleWRespectToShip = (int)(center.y - ship.getCenter().y) / 
-				(center.x - ship.getCenter().x);
-		int lowAngle = angleWRespectToShip - ANGLE_DELTA_FOR_HIT;
-		int highAngle = angleWRespectToShip + ANGLE_DELTA_FOR_HIT;
-		
-		return ((ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle) ||
-			    (ship.getRightWingAngle() >= lowAngle && ship.getRightWingAngle() <= highAngle));
+    // Obstacles will always be set distance away from ship, so if the angle of
+    // the ship's
+    // left or right wing is within a delta of the center of the obstacle, that
+    // means it is
+    // colliding with that obstacle.
+    public boolean isHittingShip(Ship ship) {
+	if (zoomPct < 90) {
+	    return false;
 	}
 
-	/* GETTERS */
-	public int getX() {
-		return center.x;
-	}
+	int angleWRespectToShip = (int) (center.y - ship.getCenter().y) / (center.x - ship.getCenter().x);
+	int lowAngle = angleWRespectToShip - ANGLE_DELTA_FOR_HIT;
+	int highAngle = angleWRespectToShip + ANGLE_DELTA_FOR_HIT;
 
-	public int getY() {
-		return center.y;
-	}
+	return ((ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle) || (ship.getRightWingAngle() >= lowAngle && ship
+		.getRightWingAngle() <= highAngle));
+    }
 
-	public Point getCenter() {
-		return center;
-	}
+    /* GETTERS */
+    public int getX() {
+	return center.x;
+    }
 
-	public int getDiameter() {
-		return diameter;
-	}
+    public int getY() {
+	return center.y;
+    }
 
-	public int getZoomPct() {
-		return zoomPct;
-	}
-	
-	public int getDamage() { 
-		return damage;
-	}
+    public Point getCenter() {
+	return center;
+    }
 
-	/* SETTERS */
-	public void setCenter(Point center) {
-		this.center = center;
-	}
+    public int getDiameter() {
+	return diameter;
+    }
 
-	public void setDiameter(int diameter) {
-		this.diameter = diameter;
-	}
+    public int getZoomPct() {
+	return zoomPct;
+    }
 
-	public void setZoomPct(int zoomPct) {
-		this.zoomPct = zoomPct;
-	}
-	
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
+    public int getDamage() {
+	return damage;
+    }
+
+    /* SETTERS */
+    public void setCenter(Point center) {
+	this.center = center;
+    }
+
+    public void setDiameter(int diameter) {
+	this.diameter = diameter;
+    }
+
+    public void setZoomPct(int zoomPct) {
+	this.zoomPct = zoomPct;
+    }
+
+    public void setDamage(int damage) {
+	this.damage = damage;
+    }
 }

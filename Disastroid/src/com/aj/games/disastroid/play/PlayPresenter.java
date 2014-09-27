@@ -20,7 +20,7 @@ import com.aj.games.disastroid.time.TickerTimer.TickInterval;
 
 public class PlayPresenter implements ITickerTimerListener {
 
-    private static final long PERIOD = 50L;
+    private static final long PERIOD = 30L;
     private Activity activity;
 
     private TickerTimer tickerTimer;
@@ -90,6 +90,7 @@ public class PlayPresenter implements ITickerTimerListener {
     }
 
     private void onShipHit(Obstacle obstacle) {
+	// ship.takeHit(obstacle);
 	activity.runOnUiThread(new Runnable() {
 	    public void run() {
 		Toast.makeText(activity, "HIT!", Toast.LENGTH_SHORT).show();
