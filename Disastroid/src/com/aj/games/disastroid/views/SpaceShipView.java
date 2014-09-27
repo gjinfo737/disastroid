@@ -8,10 +8,12 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.aj.games.disastroid.ship.Ship;
+
 public class SpaceShipView extends View {
 
     private Paint paint;
-    private Object spaceShip;
+    private Ship spaceShip;
 
     public SpaceShipView(Context context) {
 	super(context);
@@ -45,7 +47,7 @@ public class SpaceShipView extends View {
 
     }
 
-    public void render(Object spaceShip) {
+    public void render(Ship spaceShip) {
 	this.spaceShip = spaceShip;
 	this.invalidate();
     }
