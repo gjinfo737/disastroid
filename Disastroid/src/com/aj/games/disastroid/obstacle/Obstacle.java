@@ -16,15 +16,18 @@ public class Obstacle {
 	private int diameter;
 	private int zoomPct;
 	private int zoomSpeed;
+	private int damage;
 
 	public final int DEFAULT_ZOOM_SPD = 1;
 	public final int ANGLE_DELTA_FOR_HIT = 5; //TODO Calculate based on diameter?
-
+	public final int DEFAULT_DMG = 10;
+	
 	public Obstacle(int diameter, Point center) {
 		this.center = center;
 		this.diameter = diameter;
-		zoomSpeed = DEFAULT_ZOOM_SPD;
-		zoomPct = 0;
+		this.zoomSpeed = DEFAULT_ZOOM_SPD;
+		this.zoomPct = 0;
+		this.damage = DEFAULT_DMG;
 	}
 
 	public void onUpdate() {
@@ -48,20 +51,8 @@ public class Obstacle {
 		int lowAngle = angleWRespectToShip - ANGLE_DELTA_FOR_HIT;
 		int highAngle = angleWRespectToShip + ANGLE_DELTA_FOR_HIT;
 		
-		//TODO what about the wraparound at 360?
-		if (lowAngle < 0) { //There is a wraparound
-			lowAngle += 360;
-		}
-		else if (highAngle > 360) { // There is a wraparound
-			
-		}
-		else if (ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle){
-			return true;
-		}
-		else if (ship.getRightWingAngle() >= lowAngle && ship.getRightWingAngle() <= highAngle){
-			return true;
-		}
-		return false;
+		return ((ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle) ||
+			    (ship.getRightWingAngle() >= lowAngle && ship.getRightWingAngle() <= highAngle));
 	}
 
 	/* GETTERS */
@@ -84,6 +75,10 @@ public class Obstacle {
 	public int getZoomPct() {
 		return zoomPct;
 	}
+	
+	public int getDamage() { 
+		return damage;
+	}
 
 	/* SETTERS */
 	public void setCenter(Point center) {
@@ -96,5 +91,9 @@ public class Obstacle {
 
 	public void setZoomPct(int zoomPct) {
 		this.zoomPct = zoomPct;
+	}
+	
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 }
