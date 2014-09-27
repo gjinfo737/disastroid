@@ -45,7 +45,7 @@ public class Obstacle {
     // means it is
     // colliding with that obstacle.
     public boolean isHittingShip(Ship ship) {
-	if (zoomPct < 90) {
+	if (isNear()) {
 	    return false;
 	}
 
@@ -97,5 +97,9 @@ public class Obstacle {
 
     public void setDamage(int damage) {
 	this.damage = damage;
+    }
+
+    public boolean isNear() {
+	return zoomPct < 90;
     }
 }
