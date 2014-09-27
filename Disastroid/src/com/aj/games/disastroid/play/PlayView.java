@@ -7,6 +7,7 @@ import android.app.Activity;
 import com.aj.games.disastroid.R.id;
 import com.aj.games.disastroid.R.layout;
 import com.aj.games.disastroid.obstacle.Obstacle;
+import com.aj.games.disastroid.obstacles.Explosion;
 import com.aj.games.disastroid.ship.Ship;
 import com.aj.games.disastroid.views.ShipView;
 
@@ -23,8 +24,8 @@ public class PlayView {
 	this.shipView = (ShipView) this.activity.findViewById(id.shipview);
     }
 
-    public void update(Ship ship, List<Obstacle> obstacles) {
-	this.shipView.render(ship, obstacles);
+    public void update(Ship ship, List<Obstacle> obstacles, List<Explosion> explosions) {
+	this.shipView.render(ship, obstacles, explosions);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.aj.games.disastroid.views;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -14,8 +15,8 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.aj.games.disastroid.R.drawable;
 import com.aj.games.disastroid.obstacle.Obstacle;
+import com.aj.games.disastroid.obstacles.Explosion;
 import com.aj.games.disastroid.ship.Ship;
 
 public class ShipView extends ImageView {
@@ -24,9 +25,10 @@ public class ShipView extends ImageView {
     private Ship ship;
     private CanvasDrawer canvasDrawer;
     private Bitmap bm;
-    private FramingItem framingItem;
-    private List<Obstacle> obstacles;
-    private Bitmap asteroid;
+    private FramingItem framingItemShip;
+    private FramingItem framingItemAsteroid;
+    private List<Obstacle> obstacles = new ArrayList<Obstacle>();
+    private List<Explosion> explosions = new ArrayList<Explosion>();
 
     public ShipView(Context context) {
 	super(context);
@@ -46,9 +48,9 @@ public class ShipView extends ImageView {
     private void init() {
 	this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	this.paint.setStrokeWidth(5f);
-	asteroid = BitmapFactory.decodeResource(getResources(), drawable.asteroid);
 	canvasDrawer = new CanvasDrawer();
-	framingItem = new FramingItem("kitty2d_ship_", 10);
+	framingItemShip = new FramingItem("kitty2d_ship_", 10);
+	framingItemAsteroid = new FramingItem("simple_ast_", 10);
     }
 
     @SuppressLint("DrawAllocation")
@@ -67,19 +69,28 @@ public class ShipView extends ImageView {
 	    for (int i = 0; i < this.obstacles.size(); i++) {
 		Point obCenter = this.obstacles.get(i).getCenter();
 		float zoomPercent = this.obstacles.get(i).getZoomPct() / 100f;
-		this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, asteroid, true);
+		bm = BitmapFactory.decodeResource(getResources(), this.framingItemAsteroid.getCurrentFrame(getContext()));
+		this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, bm, true);
 	    }
-	    bm = BitmapFactory.decodeResource(getResources(), this.framingItem.getCurrentFrame(getContext()));
+	    bm = BitmapFactory.decodeResource(getResources(), this.framingItemShip.getCurrentFrame(getContext()));
 	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getLeftWingAngle(), bm, true);
+
+	    for (int i = 0; i < this.explosions.size(); i++) {
+		Point obCenter = this.explosions.get(i).getCenter();
+		bm = BitmapFactory.decodeResource(getResources(), this.explosions.get(i).getFramingItem().getCurrentFrame(getContext()));
+		this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, 1f, bm, true);
+	    }
 	}
     }
 
-    public void render(Ship ship, List<Obstacle> obstacles) {
+    public void render(Ship ship, List<Obstacle> obstacles, List<Explosion> explosions) {
 	this.ship = ship;
 	this.obstacles = obstacles;
+	this.explosions = explosions;
 	this.invalidate();
 
-	this.framingItem.incrementFrame();
+	this.framingItemShip.incrementFrame();
+	this.framingItemAsteroid.incrementFrame();
     }
 
     private PointF getCenter(Canvas canvas) {

@@ -6,6 +6,7 @@ public class FramingItem {
     private int frameIndex = 1;
     private String prefix;
     private int numberOfFrames;
+    private boolean loops = true;
 
     public FramingItem(String prefix, int numberOfFrames) {
 	this.prefix = prefix;
@@ -15,7 +16,7 @@ public class FramingItem {
     public void incrementFrame() {
 	if (frameIndex < numberOfFrames) {
 	    frameIndex++;
-	} else {
+	} else if (loops) {
 	    frameIndex = 1;
 	}
     }
@@ -35,5 +36,13 @@ public class FramingItem {
 	    e.printStackTrace();
 	    return -1;
 	}
+    }
+
+    public void setLooping(boolean loops) {
+	this.loops = loops;
+    }
+
+    public boolean isAtEnd() {
+	return frameIndex == numberOfFrames && !loops;
     }
 }

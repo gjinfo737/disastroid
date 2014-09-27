@@ -1,5 +1,6 @@
 package com.aj.games.disastroid.play;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.aj.games.disastroid.levels.Leveler;
 import com.aj.games.disastroid.obstacle.Obstacle;
 import com.aj.games.disastroid.obstacle.ObstaclePopulater;
+import com.aj.games.disastroid.obstacles.Explosion;
 import com.aj.games.disastroid.ship.Ship;
 import com.aj.games.disastroid.time.TickerTimer;
 import com.aj.games.disastroid.time.TickerTimer.ITickerTimerListener;
@@ -28,6 +30,7 @@ public class PlayPresenter implements ITickerTimerListener {
     private PlayView view;
     private Leveler leveler;
     private ObstaclePopulater obstaclePopulater;
+    private List<Explosion> explosions = new ArrayList<Explosion>();
 
     public PlayPresenter(Activity activity) {
 	this.activity = activity;
@@ -70,12 +73,44 @@ public class PlayPresenter implements ITickerTimerListener {
     public void onTimerTick(List<TickInterval> intervals, int tick, long period) {
 	ship.onUpdate();
 
+	while (!cleanExplosions()) {
+	}
+
+	for (int i = 0; i < explosions.size(); i++) {
+	    explosions.get(i).getFramingItem().incrementFrame();
+	}
+
 	activity.runOnUiThread(new Runnable() {
 	    public void run() {
-		view.update(ship, obstaclePopulater.getObstacles());
+		view.update(ship, obstaclePopulater.getObstacles(), explosions);
 	    }
 	});
 	detectCollisions();
+    }
+
+    private boolean cleanExplosions() {
+
+	if (explosions == null)
+	    return true;
+	if (explosions.size() == 0) {
+	    return true;
+	}
+
+	int removeIndex = -1;
+	for (int i = 0; i < explosions.size(); i++) {
+	    Explosion ob = explosions.get(i);
+	    if (ob.getFramingItem().isAtEnd()) {
+		removeIndex = i;
+		break;
+	    }
+	}
+	if (removeIndex != -1) {
+	    explosions.remove(removeIndex);
+	    return false;
+	} else {
+	    return true;
+	}
+
     }
 
     private void detectCollisions() {
@@ -90,7 +125,10 @@ public class PlayPresenter implements ITickerTimerListener {
     }
 
     private void onShipHit(Obstacle obstacle) {
-	// ship.takeHit(obstacle);
+	ship.takeHit(obstacle);
+
+	explosions.add(new Explosion(obstacle.getCenter()));
+
 	activity.runOnUiThread(new Runnable() {
 	    public void run() {
 		Toast.makeText(activity, "HIT!", Toast.LENGTH_SHORT).show();
