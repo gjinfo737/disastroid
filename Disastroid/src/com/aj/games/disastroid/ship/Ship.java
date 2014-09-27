@@ -73,7 +73,7 @@ public class Ship {
 	}
 
 	public int getRightWingAngle() {
-		return (leftWingAngle + 360) % 360;
+		return (leftWingAngle + 180) % 360;
 	}
 
 	public int getWingLength() {

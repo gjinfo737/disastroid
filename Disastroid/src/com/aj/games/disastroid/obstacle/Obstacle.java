@@ -1,6 +1,7 @@
 package com.aj.games.disastroid.obstacle;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import com.aj.games.disastroid.ship.Ship;
 
@@ -12,90 +13,99 @@ import com.aj.games.disastroid.ship.Ship;
  * wing's center is within that zone, it is considered a hit.
  */
 public class Obstacle {
-    private Point center;
-    private int diameter;
-    private int zoomPct;
-    private int zoomSpeed;
-    private int damage;
+	private Point center;
+	private int diameter;
+	private int zoomPct;
+	private int zoomSpeed;
+	private int damage;
 
-    public final int DEFAULT_ZOOM_SPD = 2;
-    public final int ANGLE_DELTA_FOR_HIT = 5; // TODO Calculate based on
-					      // diameter?
-    public final int DEFAULT_DMG = 10;
+	public final int DEFAULT_ZOOM_SPD = 2;
+	public final int ANGLE_DELTA_FOR_HIT = 5; // TODO Calculate based on
+	// diameter?
+	public final int DEFAULT_DMG = 10;
 
-    public Obstacle(int diameter, Point center) {
-	this.center = center;
-	this.diameter = diameter;
-	this.zoomSpeed = DEFAULT_ZOOM_SPD;
-	this.zoomPct = 0;
-	this.damage = DEFAULT_DMG;
-    }
-
-    public void onUpdate() {
-	zoomPct += zoomSpeed;
-    }
-
-    public boolean hasPassed() {
-	return (zoomPct >= 100);
-    }
-
-    // Obstacles will always be set distance away from ship, so if the angle of
-    // the ship's
-    // left or right wing is within a delta of the center of the obstacle, that
-    // means it is
-    // colliding with that obstacle.
-    public boolean isHittingShip(Ship ship) {
-	if (zoomPct < 90) {
-	    return false;
+	public Obstacle(int diameter, Point center) {
+		this.center = center;
+		this.diameter = diameter;
+		this.zoomSpeed = DEFAULT_ZOOM_SPD;
+		this.zoomPct = 0;
+		this.damage = DEFAULT_DMG;
 	}
 
-	int angleWRespectToShip = (int) (center.y - ship.getCenter().y) / (center.x - ship.getCenter().x);
-	int lowAngle = angleWRespectToShip - ANGLE_DELTA_FOR_HIT;
-	int highAngle = angleWRespectToShip + ANGLE_DELTA_FOR_HIT;
+	public void onUpdate() {
+		zoomPct += zoomSpeed;
+	}
 
-	return ((ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle) || (ship.getRightWingAngle() >= lowAngle && ship
-		.getRightWingAngle() <= highAngle));
-    }
+	public boolean hasPassed() {
+		return (zoomPct >= 100);
+	}
 
-    /* GETTERS */
-    public int getX() {
-	return center.x;
-    }
+	// Obstacles will always be set distance away from ship, so if the angle of
+	// the ship's
+	// left or right wing is within a delta of the center of the obstacle, that
+	// means it is
+	// colliding with that obstacle.
+	public boolean isHittingShip(Ship ship) {
+		if (zoomPct < 90) {
+			return false;
+		}
 
-    public int getY() {
-	return center.y;
-    }
+		int deltaY = center.y - ship.getCenter().y;
+		int deltaX = center.x - ship.getCenter().x;
 
-    public Point getCenter() {
-	return center;
-    }
+		int angleWRespectToShip = (int) (Math.atan(deltaY / deltaX) * 180 / Math.PI);
 
-    public int getDiameter() {
-	return diameter;
-    }
+		int lowAngle = angleWRespectToShip - ANGLE_DELTA_FOR_HIT;
+		int highAngle = angleWRespectToShip + ANGLE_DELTA_FOR_HIT;
+		Log.i("Collision", "Angle with respect to ship " + angleWRespectToShip);
+		Log.i("Collision", "Low angle for collision: " + lowAngle);
+		Log.i("Collision", "High angle for collision: " + highAngle);
+		Log.i("Collision", "Left wing angle: " + ship.getLeftWingAngle());
+		Log.i("Collision", "Right wing angle: " + ship.getRightWingAngle());
 
-    public int getZoomPct() {
-	return zoomPct;
-    }
+		return ((ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle) || (ship
+				.getRightWingAngle() >= lowAngle && ship.getRightWingAngle() <= highAngle));
+	}
 
-    public int getDamage() {
-	return damage;
-    }
+	/* GETTERS */
+	public int getX() {
+		return center.x;
+	}
 
-    /* SETTERS */
-    public void setCenter(Point center) {
-	this.center = center;
-    }
+	public int getY() {
+		return center.y;
+	}
 
-    public void setDiameter(int diameter) {
-	this.diameter = diameter;
-    }
+	public Point getCenter() {
+		return center;
+	}
 
-    public void setZoomPct(int zoomPct) {
-	this.zoomPct = zoomPct;
-    }
+	public int getDiameter() {
+		return diameter;
+	}
 
-    public void setDamage(int damage) {
-	this.damage = damage;
-    }
+	public int getZoomPct() {
+		return zoomPct;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	/* SETTERS */
+	public void setCenter(Point center) {
+		this.center = center;
+	}
+
+	public void setDiameter(int diameter) {
+		this.diameter = diameter;
+	}
+
+	public void setZoomPct(int zoomPct) {
+		this.zoomPct = zoomPct;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
 }
