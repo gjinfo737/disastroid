@@ -2,6 +2,8 @@ package com.aj.games.disastroid.ship;
 
 import java.util.Random;
 
+import com.aj.games.disastroid.obstacle.Obstacle;
+
 import android.graphics.Point;
 
 public class Ship {
@@ -49,8 +51,8 @@ public class Ship {
 		}
 	}
 
-	public void takeHit(int hitAmount) {
-		health -= hitAmount;
+	public void takeHit(Obstacle obstacle) {
+		health -= obstacle.getDamage();
 		if (health <= 0) { /* TODO game over */ }
 	}
 

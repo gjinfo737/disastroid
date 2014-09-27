@@ -55,7 +55,7 @@ public class ShipView extends ImageView {
 	    canvas.drawLine(center.x - 100f, center.y, center.x + 100f, center.y, paint);
 	} else if (this.ship != null) {
 	    bm = BitmapFactory.decodeResource(getResources(), this.framingItem.getCurrentFrame());
-	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getAngle(), bm, true);
+	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getLeftWingAngle(), bm, true);
 	}
     }
 
