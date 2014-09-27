@@ -12,11 +12,26 @@ import com.aj.games.disastroid.time.TickerTimer.TickInterval;
 public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
 
     private List<Obstacle> obstacles = new ArrayList<Obstacle>();
+    private static final float SAFE_ANGLE_PADDING = 15;
     private int level;
     private Rect populationRect;
+    private float radius;
+    private SafeArea safeArea;
 
     public ObstaclePopulater(Rect populationRect) {
 	this.populationRect = populationRect;
+	caculateRadius();
+
+    }
+
+    private void caculateRadius() {
+	int smallestDimmension = this.populationRect.width() > this.populationRect.height() ? this.populationRect.height() : this.populationRect
+		.width();
+	radius = (float) smallestDimmension / 4f;
+    }
+
+    private void createSafeArea() {
+	safeArea = new SafeArea(SAFE_ANGLE_PADDING);
     }
 
     @Override
