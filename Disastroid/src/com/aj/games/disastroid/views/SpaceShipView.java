@@ -8,12 +8,11 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.aj.games.disastroid.ship.Ship;
-
 public class SpaceShipView extends View {
 
     private Paint paint;
     private Ship spaceShip;
+    private CanvasDrawer canvasDrawer;
 
     public SpaceShipView(Context context) {
 	super(context);
@@ -33,6 +32,7 @@ public class SpaceShipView extends View {
     private void init() {
 	this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	this.paint.setStrokeWidth(5f);
+	canvasDrawer = new CanvasDrawer(getResources());
     }
 
     @Override
@@ -44,6 +44,8 @@ public class SpaceShipView extends View {
 	canvas.drawCircle(center.x, center.y, 30f, paint);
 	paint.setColor(Color.MAGENTA);
 	canvas.drawLine(center.x - 100f, center.y, center.x + 100f, center.y, paint);
+
+	canvasDrawer.drawBitmap(canvas, center.x, center.y, this.spaceShip.getRotation(), bm);
 
     }
 
