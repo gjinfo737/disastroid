@@ -9,7 +9,7 @@ public class Ship {
     private int angularVelocity; // How many degrees the ship rotates on update
 
     private final int START_HEALTH = 100;
-    private final int ANGLE_MAX = 0;
+    private final int ANGLE_MAX = 180;
 
     public Ship() {
 	health = START_HEALTH;
