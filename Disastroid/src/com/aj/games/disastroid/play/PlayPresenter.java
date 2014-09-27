@@ -48,7 +48,7 @@ public class PlayPresenter implements ITickerTimerListener {
     }
 
     public void onTap() {
-	// TODO Auto-generated method stub
+	this.ship.changeRotation();
     }
 
 }
