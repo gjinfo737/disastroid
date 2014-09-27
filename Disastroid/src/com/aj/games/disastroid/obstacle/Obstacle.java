@@ -18,6 +18,7 @@ public class Obstacle {
 	private int zoomSpeed;
 
 	public final int DEFAULT_ZOOM_SPD = 1;
+	public final int ANGLE_DELTA_FOR_HIT = 5; //TODO Calculate based on diameter?
 
 	public Obstacle(Point location, int diameter, Point center) {
 		this.center = center;
@@ -34,11 +35,24 @@ public class Obstacle {
 		return (zoomPct >= 100);
 	}
 
+	// Obstacles will always be set distance away from ship
 	public boolean isHittingShip(Ship ship) {
 		if (zoomPct < 90) {
 			return false;
 		}
 
+		int angleWRespectToShip = (int)(center.y - ship.getCenter().y) / 
+				(center.x - ship.getCenter().x);
+		int lowAngle = angleWRespectToShip - ANGLE_DELTA_FOR_HIT;
+		int highAngle = angleWRespectToShip + ANGLE_DELTA_FOR_HIT;
+		
+		//TODO what about the wraparound at 360?
+		if (ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle){
+			return true;
+		}
+		else if (ship.getRightWingAngle() >= lowAngle && ship.getRightWingAngle() <= highAngle){
+			return true;
+		}
 		return false;
 	}
 

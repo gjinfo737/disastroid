@@ -55,21 +55,16 @@ public class Ship {
 	}
 
 	/* GETTERS */
-	public Point getLeftWingTip() {
-		return new Point(0,0); 
-	}
-	
-	public Point getRightWingTip() {
-		int rightWingAngle = (leftWingAngle + 360) % 360;
-		return new Point(0, 0);
-	}
-	
 	public Point getCenter() {
 		return center;
 	}
 	
-	public int getAngle() {
+	public int getLeftWingAngle() {
 		return leftWingAngle;
+	}
+	
+	public int getRightWingAngle() {
+		return (leftWingAngle + 360) % 360;
 	}
 	
 	public int getWingLength() { 
