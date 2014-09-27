@@ -23,6 +23,8 @@ public class PlayPresenter implements ITickerTimerListener {
 		this.view = new PlayView(this, activity);
 		this.tickerTimer = new TickerTimer(PERIOD);
 		this.tickerTimer.registerNewListener(this);
+		
+		ship = new Ship();
     }
 
     @Override
