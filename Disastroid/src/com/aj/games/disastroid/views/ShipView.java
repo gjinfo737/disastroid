@@ -1,16 +1,21 @@
 package com.aj.games.disastroid.views;
 
+import java.util.List;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.aj.games.disastroid.R.drawable;
+import com.aj.games.disastroid.obstacle.Obstacle;
 import com.aj.games.disastroid.ship.Ship;
 
 public class ShipView extends ImageView {
@@ -20,6 +25,8 @@ public class ShipView extends ImageView {
     private CanvasDrawer canvasDrawer;
     private Bitmap bm;
     private FramingItem framingItem;
+    private List<Obstacle> obstacles;
+    private Bitmap icon;
 
     public ShipView(Context context) {
 	super(context);
@@ -39,11 +46,12 @@ public class ShipView extends ImageView {
     private void init() {
 	this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	this.paint.setStrokeWidth(5f);
-
+	icon = BitmapFactory.decodeResource(getResources(), drawable.ic_launcher);
 	canvasDrawer = new CanvasDrawer();
 	framingItem = new FramingItem(new int[] { drawable.ship_0001, drawable.ship_0002 });
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
 	PointF center = getCenter(canvas);
@@ -56,11 +64,19 @@ public class ShipView extends ImageView {
 	} else if (this.ship != null) {
 	    bm = BitmapFactory.decodeResource(getResources(), this.framingItem.getCurrentFrame());
 	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getLeftWingAngle(), bm, true);
+
+	    for (int i = 0; i < this.obstacles.size(); i++) {
+		Point obCenter = this.obstacles.get(i).getCenter();
+		// float zoomPercent = this.obstacles.get(i).getZoomPct() /
+		// 100f;
+		canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, 1f, icon, true);
+	    }
 	}
     }
 
-    public void render(Ship ship) {
+    public void render(Ship ship, List<Obstacle> obstacles) {
 	this.ship = ship;
+	this.obstacles = obstacles;
 	this.invalidate();
 
 	this.framingItem.incrementFrame();

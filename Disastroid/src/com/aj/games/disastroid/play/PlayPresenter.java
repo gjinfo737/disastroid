@@ -20,7 +20,7 @@ import com.aj.games.disastroid.time.TickerTimer.TickInterval;
 
 public class PlayPresenter implements ITickerTimerListener {
 
-    private static final long PERIOD = 33L;
+    private static final long PERIOD = 50L;
     private Activity activity;
 
     private TickerTimer tickerTimer;
@@ -48,7 +48,7 @@ public class PlayPresenter implements ITickerTimerListener {
 		    }
 		});
 	    }
-	}, 3000);
+	}, 2000);
     }
 
     private void initialize() {
@@ -72,7 +72,7 @@ public class PlayPresenter implements ITickerTimerListener {
 
 	activity.runOnUiThread(new Runnable() {
 	    public void run() {
-		view.update(ship);
+		view.update(ship, obstaclePopulater.getObstacles());
 	    }
 	});
 	detectCollisions();
