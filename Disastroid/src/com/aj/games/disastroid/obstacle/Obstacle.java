@@ -19,7 +19,7 @@ public class Obstacle {
 
 	public final int DEFAULT_ZOOM_SPD = 1;
 
-	public Obstacle(Point location, int diameter) {
+	public Obstacle(Point location, int diameter, Point center) {
 		this.center = center;
 		this.diameter = diameter;
 		zoomSpeed = DEFAULT_ZOOM_SPD;
@@ -38,6 +38,7 @@ public class Obstacle {
 		if (zoomPct < 90) {
 			return false;
 		}
+
 		return false;
 	}
 

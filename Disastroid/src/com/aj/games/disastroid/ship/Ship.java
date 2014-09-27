@@ -8,7 +8,7 @@ public class Ship {
 	private Point center; // Location on screen of the center of the ship
 	private boolean isClockwise; // Direction the ship is rotating
 	private int health; // HP of the Ship
-	private int angle; // Angle of the ship's left wing
+	private int leftWingAngle; // Angle of the ship's left wing
 	private int angularVelocity; // How many degrees the ship rotates on update
 	private int wingLength; // How far the ship's wings extend from center
 
@@ -22,7 +22,7 @@ public class Ship {
 
 		this.health = START_HEALTH;
 		this.isClockwise = r.nextInt() % 2 == 0;
-		this.angle = r.nextInt(ANGLE_MAX);
+		this.leftWingAngle = r.nextInt(ANGLE_MAX);
 		this.angularVelocity = DEFAULT_ANG_VEL;
 		this.wingLength = WING_LENGTH;
 		this.center = new Point(100, 100); //TODO How to get center?
@@ -32,20 +32,20 @@ public class Ship {
 		this.center = center;
 		this.health = START_HEALTH;
 		this.isClockwise = isClockwise;
-		this.angle = angle;
+		this.leftWingAngle = angle;
 		this.angularVelocity = DEFAULT_ANG_VEL;
 		this.wingLength = WING_LENGTH;
 	}
 
 	/* UPDATES */
 	public void onUpdate() {
-		angle = isClockwise ? (angle - angularVelocity)
-				: (angle + angularVelocity);
+		leftWingAngle = isClockwise ? (leftWingAngle - angularVelocity)
+				: (leftWingAngle + angularVelocity);
 		// Check for wrap-around (If the end of the ship we are tracking moves 1st or 2nd quad)
-		if (angle < 0) {
-			angle = ANGLE_MAX - angle;
-		} else if (angle > ANGLE_MAX) {
-			angle = angle - ANGLE_MAX;
+		if (leftWingAngle < 0) {
+			leftWingAngle = ANGLE_MAX - leftWingAngle;
+		} else if (leftWingAngle > ANGLE_MAX) {
+			leftWingAngle = leftWingAngle - ANGLE_MAX;
 		}
 	}
 
@@ -56,7 +56,12 @@ public class Ship {
 
 	/* GETTERS */
 	public Point getLeftWingTip() {
-		return 
+		return new Point(0,0); 
+	}
+	
+	public Point getRightWingTip() {
+		int rightWingAngle = (leftWingAngle + 360) % 360;
+		return new Point(0, 0);
 	}
 	
 	public Point getCenter() {
@@ -64,7 +69,7 @@ public class Ship {
 	}
 	
 	public int getAngle() {
-		return angle;
+		return leftWingAngle;
 	}
 	
 	public int getWingLength() { 
