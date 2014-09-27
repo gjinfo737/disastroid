@@ -14,11 +14,11 @@ public class Leveler implements ITickerTimerListener {
 
     @Override
     public void onTimerTick(List<TickInterval> intervals, int tick, long period) {
-	if (TickerTimer.everySeconds(SECONDS_BETWEEN_LEVEL_INCREMENT, tick, period)) {
+	if (TickerTimer.everySeconds(1, tick, period)) {
 	    playSeconds++;
-	}
-	if (shouldLevelUp()) {
-	    levelUp();
+	    if (shouldLevelUp()) {
+		levelUp();
+	    }
 	}
     }
 
