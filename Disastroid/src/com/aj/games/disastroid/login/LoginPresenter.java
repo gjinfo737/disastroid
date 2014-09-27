@@ -11,18 +11,18 @@ public class LoginPresenter {
     private LoginView view;
 
     public LoginPresenter(Activity activity) {
-	this.activity = activity;
-	this.view = new LoginView(this, activity);
-	onLoginSuccess();
+		this.activity = activity;
+		this.view = new LoginView(this, activity);
+		onLoginSuccess();
     }
 
     public void login(String username, String password) {
-	this.onLoginSuccess();
+    	this.onLoginSuccess();
     }
 
     private void onLoginSuccess() {
-	Intent intent = new Intent(this.activity, PlayActivity.class);
-	this.activity.startActivity(intent);
+		Intent intent = new Intent(this.activity, PlayActivity.class);
+		this.activity.startActivity(intent);
     }
 
 }

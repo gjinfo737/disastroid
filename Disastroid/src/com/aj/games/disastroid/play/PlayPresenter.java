@@ -18,6 +18,7 @@ public class PlayPresenter implements ITickerTimerListener {
     private PlayView view;
     private TickerTimer tickerTimer;
     private ShipView shipView;
+    private Ship ship;
 
     public PlayPresenter(Activity activity) {
 	this.activity = activity;
@@ -25,13 +26,15 @@ public class PlayPresenter implements ITickerTimerListener {
 	this.tickerTimer = new TickerTimer(PERIOD);
 	this.tickerTimer.registerNewListener(this);
 
-	shipView = new ShipView(this.activity);
+	this.ship = new Ship();
+	this.shipView = new ShipView(this.activity);
     }
 
     @Override
     public void onTimerTick(List<TickInterval> intervals, int tick, long period) {
 	Log.i("s", "s" + Math.random());
-	this.shipView.render(new Ship());
+	ship.onUpdate();
+	this.shipView.render(this.ship);
     }
 
     public void onResume() {
