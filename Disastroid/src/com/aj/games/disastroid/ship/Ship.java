@@ -1,23 +1,38 @@
 package com.aj.games.disastroid.ship;
 
+import android.util.Log;
+
 public class Ship {
 	private boolean isClockwise;
-	private float rate;
 	private int health;
+	private int angle; // Angle of the ship
 	
 	private final int START_HEALTH = 100;
 	
-	public Ship(boolean isClockwise, float rate) {
+	public Ship(boolean isClockwise, int angle) {
 		health = START_HEALTH;
 		this.isClockwise = isClockwise;
-		this.rate = rate;
+		this.angle = angle;
 	}
 	
 	public void changeRotation() {
 		isClockwise = !isClockwise;
 	}
 	
-	public void onUpdate() {
-		
+	public void updateAngle(int angle) {
+		if (!isAngleInRange(angle)) { 
+			Log.e(Ship.class.getName(), "Attempted to update to inappropriate angle " + angle);
+			return; 
+		}
+		this.angle = angle;
+	}
+	
+	public boolean isAngleInRange(int angle) {
+		return (0 < angle && angle < 180);
+	}
+	
+	public void takeHit(int hitAmount) {
+		health -= hitAmount;
+		if (health <= 0) { /*TODO game over */ }
 	}
 }
