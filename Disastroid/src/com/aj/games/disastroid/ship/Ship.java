@@ -1,5 +1,7 @@
 package com.aj.games.disastroid.ship;
 
+import java.util.Random;
+
 import android.util.Log;
 
 public class Ship {
@@ -8,6 +10,14 @@ public class Ship {
 	private int angle; // Angle of the ship
 	
 	private final int START_HEALTH = 100;
+	private final int ANGLE_MAX = 0;
+	
+	public Ship() {
+		health = START_HEALTH;
+		Random r = new Random();
+		isClockwise = r.nextInt() % 2 == 0;
+		angle = r.nextInt(ANGLE_MAX);
+	}
 	
 	public Ship(boolean isClockwise, int angle) {
 		health = START_HEALTH;
@@ -28,7 +38,7 @@ public class Ship {
 	}
 	
 	public boolean isAngleInRange(int angle) {
-		return (0 < angle && angle < 180);
+		return (0 < angle && angle < ANGLE_MAX);
 	}
 	
 	public void takeHit(int hitAmount) {
