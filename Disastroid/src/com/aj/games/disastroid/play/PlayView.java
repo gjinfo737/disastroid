@@ -10,10 +10,9 @@ public class PlayView {
     private Activity activity;
 
     public PlayView(PlayPresenter presenter, Activity activity) {
-	this.presenter = presenter;
-	this.activity = activity;
-	this.activity.setContentView(layout.play_activity);
-
+		this.presenter = presenter;
+		this.activity = activity;
+		this.activity.setContentView(layout.play_activity);
     }
 
 }

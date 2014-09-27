@@ -19,10 +19,10 @@ public class PlayPresenter implements ITickerTimerListener {
     private Ship ship;
 
     public PlayPresenter(Activity activity) {
-	this.activity = activity;
-	this.view = new PlayView(this, activity);
-	this.tickerTimer = new TickerTimer(PERIOD);
-	this.tickerTimer.registerNewListener(this);
+		this.activity = activity;
+		this.view = new PlayView(this, activity);
+		this.tickerTimer = new TickerTimer(PERIOD);
+		this.tickerTimer.registerNewListener(this);
     }
 
     @Override
