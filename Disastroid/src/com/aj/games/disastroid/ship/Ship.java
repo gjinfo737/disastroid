@@ -4,6 +4,8 @@ import java.util.Random;
 
 import android.graphics.Point;
 
+import com.aj.games.disastroid.obstacle.Obstacle;
+
 public class Ship {
     private Point center; // Location on screen of the center of the ship
     private boolean isClockwise; // Direction the ship is rotating
@@ -19,7 +21,6 @@ public class Ship {
 
     public Ship() {
 	Random r = new Random();
-
 	this.health = START_HEALTH;
 	this.isClockwise = r.nextInt() % 2 == 0;
 	this.leftWingAngle = r.nextInt(ANGLE_MAX);
@@ -35,6 +36,12 @@ public class Ship {
 	this.leftWingAngle = angle;
 	this.angularVelocity = DEFAULT_ANG_VEL;
 	this.wingLength = WING_LENGTH;
+    }
+
+    public void takeHit(Obstacle obstacle) {
+	health -= obstacle.getDamage();
+	if (health <= 0) { /* TODO game over */
+	}
     }
 
     /* UPDATES */
