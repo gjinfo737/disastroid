@@ -16,7 +16,7 @@ public class Ship {
 
     private final int START_HEALTH = 100;
     private final int ANGLE_MAX = 360;
-    private final int DEFAULT_ANG_VEL = 4;
+    private final int DEFAULT_ANG_VEL = 2;
     private final int WING_LENGTH = 40;
 
     public Ship() {
@@ -49,11 +49,22 @@ public class Ship {
 	leftWingAngle = isClockwise ? (leftWingAngle - angularVelocity) : (leftWingAngle + angularVelocity);
 	// Check for wrap-around (If the end of the ship we are tracking moves
 	// 1st or 2nd quad)
-	if (leftWingAngle < 0) {
-	    leftWingAngle = ANGLE_MAX - leftWingAngle;
-	} else if (leftWingAngle > ANGLE_MAX) {
-	    leftWingAngle = leftWingAngle - ANGLE_MAX;
+	leftWingAngle = (int) cleanAngle(leftWingAngle);
+	// if (leftWingAngle < 0) {
+	// leftWingAngle = ANGLE_MAX - leftWingAngle;
+	// } else if (leftWingAngle > ANGLE_MAX) {
+	// leftWingAngle = leftWingAngle - ANGLE_MAX;
+	// }
+    }
+
+    private float cleanAngle(float angle) {
+	while (angle < 0) {
+	    angle += 360;
 	}
+	while (angle >= 360) {
+	    angle -= 360;
+	}
+	return angle;
     }
 
     public void takeHit(int hitAmount) {
@@ -72,7 +83,7 @@ public class Ship {
     }
 
     public int getRightWingAngle() {
-	return (leftWingAngle + 360) % 360;
+	return (leftWingAngle + 180) % 360;
     }
 
     public int getWingLength() {

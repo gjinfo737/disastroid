@@ -83,20 +83,24 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
     }
 
     private void populate() {
-	obstacles.add(new Obstacle((int) radius, createRandomPointOnCircle()));
+	float angle = (float) (Math.random() * 360f);
+	obstacles.add(new Obstacle((int) radius, createRandomPointOnCircle(angle), angle));
     }
 
-    private Point createRandomPointOnCircle() {
+    private Point createRandomPointOnCircle(float angle) {
 	Point point = new Point();
-	float angle = (float) (Math.random() * 360f);
+
 	while (this.safeArea.isInArea(angle)) {
 	    angle = (float) (Math.random() * 360f);
 	}
 
-	point.x = (int) (radius * Math.cos(angle)) + populationRect.centerX();
-	point.y = (int) (radius * Math.sin(angle)) + populationRect.centerY();
-
+	point.x = (int) (radius * Math.cos(toRadians(angle))) + populationRect.centerX();
+	point.y = (int) ((int) populationRect.centerY() - (radius * Math.sin(toRadians(angle))));
 	return point;
+    }
+
+    private float toRadians(float angle) {
+	return (float) (angle * Math.PI / 180f);
     }
 
     @Override

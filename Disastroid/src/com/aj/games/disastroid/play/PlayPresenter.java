@@ -129,11 +129,11 @@ public class PlayPresenter implements ITickerTimerListener {
 
 	explosions.add(new Explosion(obstacle.getCenter()));
 
-	activity.runOnUiThread(new Runnable() {
-	    public void run() {
-		Toast.makeText(activity, "HIT!", Toast.LENGTH_SHORT).show();
-	    }
-	});
+	// activity.runOnUiThread(new Runnable() {
+	// public void run() {
+	// Toast.makeText(activity, "HIT!", Toast.LENGTH_SHORT).show();
+	// }
+	// });
     }
 
     public void onResume() {

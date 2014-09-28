@@ -1,6 +1,7 @@
 package com.aj.games.disastroid.obstacle;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import com.aj.games.disastroid.ship.Ship;
 
@@ -19,13 +20,15 @@ public class Obstacle {
     private int damage;
 
     public final int DEFAULT_ZOOM_SPD = 2;
-    public final int ANGLE_DELTA_FOR_HIT = 5; // TODO Calculate based on
-					      // diameter?
+    public final int ANGLE_DELTA_FOR_HIT = 15; // TODO Calculate based on
+					       // diameter?
     public final int DEFAULT_DMG = 10;
+    private float angle;
 
-    public Obstacle(int diameter, Point center) {
+    public Obstacle(int diameter, Point center, float angle) {
 	this.center = center;
 	this.diameter = diameter;
+	this.angle = angle;
 	this.zoomSpeed = DEFAULT_ZOOM_SPD;
 	this.zoomPct = 0;
 	this.damage = DEFAULT_DMG;
@@ -45,16 +48,53 @@ public class Obstacle {
     // means it is
     // colliding with that obstacle.
     public boolean isHittingShip(Ship ship) {
-	if (isNear()) {
+	if (!isNear()) {
 	    return false;
 	}
 
-	int angleWRespectToShip = (int) (center.y - ship.getCenter().y) / (center.x - ship.getCenter().x);
-	int lowAngle = angleWRespectToShip - ANGLE_DELTA_FOR_HIT;
-	int highAngle = angleWRespectToShip + ANGLE_DELTA_FOR_HIT;
+	float testAngle = this.angle;
 
-	return ((ship.getLeftWingAngle() >= lowAngle && ship.getLeftWingAngle() <= highAngle) || (ship.getRightWingAngle() >= lowAngle && ship
-		.getRightWingAngle() <= highAngle));
+	float lowAngle = cleanAngle(testAngle - ANGLE_DELTA_FOR_HIT);
+	float highAngle = cleanAngle(testAngle + ANGLE_DELTA_FOR_HIT);
+
+	int leftWingAngle = (int) cleanAngle(ship.getLeftWingAngle());
+	int rightWingAngle = (int) cleanAngle(ship.getRightWingAngle());
+	Log.i("", String.format("%s %s ", leftWingAngle, rightWingAngle));
+	// Here be dragons
+	if (testAngle < ANGLE_DELTA_FOR_HIT) {
+	    if (leftWingAngle >= 0 && leftWingAngle <= ANGLE_DELTA_FOR_HIT) {
+		return true;
+	    } else if (rightWingAngle >= 0 && rightWingAngle <= ANGLE_DELTA_FOR_HIT) {
+		return true;
+	    } else {
+		return false;
+	    }
+	} else if (testAngle > 360 - ANGLE_DELTA_FOR_HIT) {
+	    if (leftWingAngle >= 360 - ANGLE_DELTA_FOR_HIT && leftWingAngle <= 360) {
+		return true;
+	    } else if (rightWingAngle >= 360 && rightWingAngle <= 360) {
+		return true;
+	    } else {
+		return false;
+	    }
+	} else {
+	    if (leftWingAngle >= lowAngle && leftWingAngle <= highAngle)
+		return true;
+	    if (rightWingAngle >= lowAngle && rightWingAngle <= highAngle)
+		return true;
+	    else
+		return false;
+	}
+    }
+
+    private float cleanAngle(float angle) {
+	while (angle < 0) {
+	    angle += 360;
+	}
+	while (angle >= 360) {
+	    angle -= 360;
+	}
+	return angle;
     }
 
     /* GETTERS */
@@ -100,6 +140,10 @@ public class Obstacle {
     }
 
     public boolean isNear() {
-	return zoomPct < 90;
+	return zoomPct >= 90;
+    }
+
+    public float getAngle() {
+	return angle;
     }
 }

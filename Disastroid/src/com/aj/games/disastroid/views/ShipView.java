@@ -67,13 +67,19 @@ public class ShipView extends ImageView {
 	} else if (this.ship != null) {
 
 	    drawObstacles(canvas, false);
-	    bm = BitmapFactory.decodeResource(getResources(), this.framingItemShip.getCurrentFrame(getContext()));
-	    canvasDrawer.drawBitmap(canvas, center.x, center.y, this.ship.getLeftWingAngle(), bm, true);
+	    drawShip(canvas, center);
 
 	    drawObstacles(canvas, true);
 	    drawExplosions(canvas);
 
 	}
+    }
+
+    private void drawShip(Canvas canvas, PointF center) {
+	bm = BitmapFactory.decodeResource(getResources(), this.framingItemShip.getCurrentFrame(getContext()));
+	canvasDrawer.drawBitmap(canvas, center.x, center.y, -this.ship.getRightWingAngle(), bm, true);
+	// canvasDrawer.drawBitmap(canvas, center.x, center.y,
+	// -(this.ship.getLeftWingAngle() + 90), bm, true);
     }
 
     private void drawExplosions(Canvas canvas) {
@@ -91,6 +97,9 @@ public class ShipView extends ImageView {
 		float zoomPercent = this.obstacles.get(i).getZoomPct() / 100f;
 		bm = BitmapFactory.decodeResource(getResources(), this.framingItemAsteroid.getCurrentFrame(getContext()));
 		this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, bm, true);
+		paint.setColor(Color.WHITE);
+		paint.setTextSize(10);
+		canvas.drawText(this.obstacles.get(i).getAngle() + "", obCenter.x, obCenter.y, paint);
 	    }
 	}
     }
