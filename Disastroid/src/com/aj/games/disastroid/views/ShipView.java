@@ -74,8 +74,16 @@ public class ShipView extends ImageView {
     }
 
     private void drawShip(Canvas canvas, PointF center) {
+
 	bm = BitmapFactory.decodeResource(getResources(), this.framingItemShip.getCurrentFrame(getContext()));
-	canvasDrawer.drawBitmap(canvas, center.x, center.y, -this.ship.getRightWingAngle(), bm, true);
+
+	float height = canvas.getHeight();
+
+	// bmheight*scale = .5f*height
+	// scale = .5f*height / bmheight
+	float scale = (.5f * height) / bm.getHeight();
+
+	canvasDrawer.drawBitmap(canvas, center.x, center.y, -this.ship.getRightWingAngle(), scale, bm, true);
 	// canvasDrawer.drawBitmap(canvas, center.x, center.y,
 	// -(this.ship.getLeftWingAngle() + 90), bm, true);
     }
@@ -96,9 +104,10 @@ public class ShipView extends ImageView {
 	    this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, bm, true);
 	    paint.setColor(Color.WHITE);
 	    paint.setTextSize(10);
-	    if (this.obstacles.get(i).isNear()) {
-		canvas.drawText(this.obstacles.get(i).getAngle() + "", obCenter.x, obCenter.y, paint);
-	    }
+	    // if (this.obstacles.get(i).isNear()) {
+	    // canvas.drawText(this.obstacles.get(i).getAngle() + "",
+	    // obCenter.x, obCenter.y, paint);
+	    // }
 	}
     }
 
