@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -70,7 +71,19 @@ public class ShipView extends ImageView {
 	    drawShip(canvas, center);
 	    drawExplosions(canvas);
 
+	    drawHealth(canvas);
 	}
+    }
+
+    private void drawHealth(Canvas canvas) {
+	RectF rect = new RectF();
+	paint.setColor(Color.RED);
+	rect.left = 0;
+	rect.right = canvas.getWidth() * ship.getHealthPercent();
+	rect.top = canvas.getHeight() * .97f;
+	rect.bottom = canvas.getHeight();
+
+	canvas.drawRect(rect, paint);
     }
 
     private void drawShip(Canvas canvas, PointF center) {

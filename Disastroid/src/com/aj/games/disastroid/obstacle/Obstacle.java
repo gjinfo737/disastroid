@@ -16,20 +16,23 @@ public class Obstacle {
     private static final int NEAR = 70;
     private Point center;
     private int diameter;
-    private int zoomPct;
-    private int zoomSpeed;
+    private float zoomPct;
+    private float zoomSpeed;
     private float damage;
 
-    public final int DEFAULT_ZOOM_SPD = 1;
-    public final int ANGLE_DELTA_FOR_HIT = 15;
-    public final float DEFAULT_DMG = .10f;
+    public final float MIN_ZOOM_SPD = 1f;
+    public final float MAX_ZOOM_SPD = 10f;
+    public final int ANGLE_DELTA_FOR_HIT = 3;
+    public final float DEFAULT_DMG = 1f;
     private float angle;
+    private int level;
 
-    public Obstacle(int diameter, Point center, float angle) {
+    public Obstacle(int diameter, Point center, float angle, int level) {
 	this.center = center;
 	this.diameter = diameter;
 	this.angle = angle;
-	this.zoomSpeed = DEFAULT_ZOOM_SPD;
+	this.level = level > 100 ? 100 : level;
+	this.zoomSpeed = MIN_ZOOM_SPD + ((MAX_ZOOM_SPD - MIN_ZOOM_SPD) * (this.level / 100f));
 	this.zoomPct = 0;
 	this.damage = DEFAULT_DMG;
     }
@@ -39,6 +42,7 @@ public class Obstacle {
     }
 
     public boolean hasPassed() {
+
 	return (zoomPct >= 100);
     }
 
@@ -114,7 +118,7 @@ public class Obstacle {
 	return diameter;
     }
 
-    public int getZoomPct() {
+    public float getZoomPct() {
 	return zoomPct;
     }
 
@@ -129,10 +133,6 @@ public class Obstacle {
 
     public void setDiameter(int diameter) {
 	this.diameter = diameter;
-    }
-
-    public void setZoomPct(int zoomPct) {
-	this.zoomPct = zoomPct;
     }
 
     public void setDamage(int damage) {

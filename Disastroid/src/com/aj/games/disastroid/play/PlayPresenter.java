@@ -82,7 +82,7 @@ public class PlayPresenter implements ITickerTimerListener {
 
 	activity.runOnUiThread(new Runnable() {
 	    public void run() {
-		view.update(ship, obstaclePopulater.getObstacles(), explosions);
+		view.update(ship, obstaclePopulater.getObstacles(), explosions, leveler.getLevel());
 	    }
 	});
 	detectCollisions();
@@ -129,11 +129,14 @@ public class PlayPresenter implements ITickerTimerListener {
 
 	explosions.add(new Explosion(obstacle.getCenter()));
 
-	// activity.runOnUiThread(new Runnable() {
-	// public void run() {
-	// Toast.makeText(activity, "HIT!", Toast.LENGTH_SHORT).show();
-	// }
-	// });
+	if (ship.isDead()) {
+	    onPause();
+	    activity.runOnUiThread(new Runnable() {
+		public void run() {
+		    Toast.makeText(activity, "Game over!", Toast.LENGTH_SHORT).show();
+		}
+	    });
+	}
     }
 
     public void onResume() {

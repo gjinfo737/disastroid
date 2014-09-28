@@ -91,7 +91,7 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
 
     private void populate() {
 	float angle = (float) (Math.random() * 360f);
-	obstacles.add(new Obstacle((int) radius, createRandomPointOnCircle(angle), angle));
+	obstacles.add(new Obstacle((int) radius, createRandomPointOnCircle(angle), angle, level));
     }
 
     private Point createRandomPointOnCircle(float angle) {

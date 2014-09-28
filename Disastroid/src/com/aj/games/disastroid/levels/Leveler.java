@@ -43,4 +43,8 @@ public class Leveler implements ITickerTimerListener {
 	this.levelListener.onLevelUp(level);
     }
 
+    public int getLevel() {
+	return level;
+    }
+
 }

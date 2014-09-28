@@ -40,7 +40,7 @@ public class Ship {
 
     public void takeHit(Obstacle obstacle) {
 	health -= obstacle.getDamage();
-	if (health <= 0) { /* TODO game over */
+	if (health <= 0) {
 	}
     }
 
@@ -92,6 +92,18 @@ public class Ship {
 
     public void setWingLength(int wingLength) {
 	this.wingLength = wingLength;
+    }
+
+    public boolean isDead() {
+	return health <= 0;
+    }
+
+    public float getHealth() {
+	return health;
+    }
+
+    public float getHealthPercent() {
+	return health / 100f;
     }
 
 }
