@@ -21,8 +21,7 @@ public class Obstacle {
     private int damage;
 
     public final int DEFAULT_ZOOM_SPD = 1;
-    public final int ANGLE_DELTA_FOR_HIT = 15; // TODO Calculate based on
-					       // diameter?
+    public final int ANGLE_DELTA_FOR_HIT = 15;
     public final int DEFAULT_DMG = 10;
     private float angle;
 
