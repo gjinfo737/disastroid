@@ -16,7 +16,7 @@ public class Ship {
 
     private final int START_HEALTH = 100;
     private final int ANGLE_MAX = 360;
-    private final int DEFAULT_ANG_VEL = 2;
+    private final int DEFAULT_ANG_VEL = 3;
     private final int WING_LENGTH = 40;
 
     public Ship() {

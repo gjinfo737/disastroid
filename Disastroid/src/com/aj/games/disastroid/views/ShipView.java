@@ -66,10 +66,8 @@ public class ShipView extends ImageView {
 	    canvas.drawLine(center.x - 100f, center.y, center.x + 100f, center.y, paint);
 	} else if (this.ship != null) {
 
-	    drawObstacles(canvas, false);
+	    drawObstacles(canvas);
 	    drawShip(canvas, center);
-
-	    drawObstacles(canvas, true);
 	    drawExplosions(canvas);
 
 	}
@@ -90,15 +88,15 @@ public class ShipView extends ImageView {
 	}
     }
 
-    private void drawObstacles(Canvas canvas, boolean drawNear) {
+    private void drawObstacles(Canvas canvas) {
 	for (int i = 0; i < this.obstacles.size(); i++) {
-	    if (!this.obstacles.get(i).isNear() == drawNear) {
-		Point obCenter = this.obstacles.get(i).getCenter();
-		float zoomPercent = this.obstacles.get(i).getZoomPct() / 100f;
-		bm = BitmapFactory.decodeResource(getResources(), this.framingItemAsteroid.getCurrentFrame(getContext()));
-		this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, bm, true);
-		paint.setColor(Color.WHITE);
-		paint.setTextSize(10);
+	    Point obCenter = this.obstacles.get(i).getCenter();
+	    float zoomPercent = this.obstacles.get(i).getZoomPct() / 100f;
+	    bm = BitmapFactory.decodeResource(getResources(), this.framingItemAsteroid.getCurrentFrame(getContext()));
+	    this.canvasDrawer.drawBitmap(canvas, obCenter.x, obCenter.y, 0f, zoomPercent, bm, true);
+	    paint.setColor(Color.WHITE);
+	    paint.setTextSize(10);
+	    if (this.obstacles.get(i).isNear()) {
 		canvas.drawText(this.obstacles.get(i).getAngle() + "", obCenter.x, obCenter.y, paint);
 	    }
 	}

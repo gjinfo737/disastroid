@@ -13,13 +13,14 @@ import com.aj.games.disastroid.ship.Ship;
  * wing's center is within that zone, it is considered a hit.
  */
 public class Obstacle {
+    private static final int NEAR = 70;
     private Point center;
     private int diameter;
     private int zoomPct;
     private int zoomSpeed;
     private int damage;
 
-    public final int DEFAULT_ZOOM_SPD = 2;
+    public final int DEFAULT_ZOOM_SPD = 1;
     public final int ANGLE_DELTA_FOR_HIT = 15; // TODO Calculate based on
 					       // diameter?
     public final int DEFAULT_DMG = 10;
@@ -140,7 +141,7 @@ public class Obstacle {
     }
 
     public boolean isNear() {
-	return zoomPct >= 90;
+	return zoomPct >= NEAR;
     }
 
     public float getAngle() {
