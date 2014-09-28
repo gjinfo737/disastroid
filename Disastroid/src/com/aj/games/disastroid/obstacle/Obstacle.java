@@ -18,11 +18,11 @@ public class Obstacle {
     private int diameter;
     private int zoomPct;
     private int zoomSpeed;
-    private int damage;
+    private float damage;
 
     public final int DEFAULT_ZOOM_SPD = 1;
     public final int ANGLE_DELTA_FOR_HIT = 15;
-    public final int DEFAULT_DMG = 10;
+    public final float DEFAULT_DMG = .10f;
     private float angle;
 
     public Obstacle(int diameter, Point center, float angle) {
@@ -118,7 +118,7 @@ public class Obstacle {
 	return zoomPct;
     }
 
-    public int getDamage() {
+    public float getDamage() {
 	return damage;
     }
 

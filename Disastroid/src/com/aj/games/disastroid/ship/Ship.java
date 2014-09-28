@@ -9,7 +9,7 @@ import com.aj.games.disastroid.obstacle.Obstacle;
 public class Ship {
     private Point center; // Location on screen of the center of the ship
     private boolean isClockwise; // Direction the ship is rotating
-    private int health; // HP of the Ship
+    private float health; // HP of the Ship
     private int leftWingAngle; // Angle of the ship's left wing
     private int angularVelocity; // How many degrees the ship rotates on update
     private int wingLength; // How far the ship's wings extend from center
@@ -47,14 +47,7 @@ public class Ship {
     /* UPDATES */
     public void onUpdate() {
 	leftWingAngle = isClockwise ? (leftWingAngle - angularVelocity) : (leftWingAngle + angularVelocity);
-	// Check for wrap-around (If the end of the ship we are tracking moves
-	// 1st or 2nd quad)
 	leftWingAngle = (int) cleanAngle(leftWingAngle);
-	// if (leftWingAngle < 0) {
-	// leftWingAngle = ANGLE_MAX - leftWingAngle;
-	// } else if (leftWingAngle > ANGLE_MAX) {
-	// leftWingAngle = leftWingAngle - ANGLE_MAX;
-	// }
     }
 
     private float cleanAngle(float angle) {
@@ -65,12 +58,6 @@ public class Ship {
 	    angle -= 360;
 	}
 	return angle;
-    }
-
-    public void takeHit(int hitAmount) {
-	health -= hitAmount;
-	if (health <= 0) { /* TODO game over */
-	}
     }
 
     /* GETTERS */

@@ -19,9 +19,10 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
     private Rect populationRect;
     private float radius;
     private SafeArea safeArea;
-    private float safeAreaChangePeriod = 10;
+    private float safeAreaChangePeriod = 20;
     private float populatePeriod = .5f;
     private float chanceOfPopulate = .5f;
+    private int countDownToDanger;
 
     public ObstaclePopulater(Rect populationRect) {
 	this.populationRect = populationRect;
@@ -37,6 +38,7 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
 
     private void createSafeArea() {
 	safeArea = new SafeArea(SAFE_ANGLE_PADDING);
+	countDownToDanger = 5;
     }
 
     @Override
@@ -45,16 +47,21 @@ public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
 	    ob.onUpdate();
 	}
 
-	if (TickerTimer.everySeconds(safeAreaChangePeriod, tick, period)) {
-	    createSafeArea();
+	if (countDownToDanger <= 0) {
+	    if (TickerTimer.everySeconds(safeAreaChangePeriod, tick, period)) {
+		createSafeArea();
+	    }
+	    if (TickerTimer.everySeconds(populatePeriod, tick, period)) {
+		if (Math.random() < chanceOfPopulate) {
+		    populate();
+		}
+
+	    }
+	} else if (TickerTimer.everySeconds(1, tick, period)) {
+	    countDownToDanger--;
 	}
 
-	if (TickerTimer.everySeconds(populatePeriod, tick, period)) {
-	    if (Math.random() < chanceOfPopulate) {
-		populate();
-	    }
-	    while (!cleanObstaclesList()) {
-	    }
+	while (!cleanObstaclesList()) {
 	}
     }
 
