@@ -14,14 +14,14 @@ import com.aj.games.disastroid.time.TickerTimer.TickInterval;
 public class ObstaclePopulater implements ITickerTimerListener, ILevelListener {
 
     private List<Obstacle> obstacles = new ArrayList<Obstacle>();
-    private static final float SAFE_ANGLE_PADDING = 15;
+    private static final float SAFE_ANGLE_PADDING = 25;
     private int level;
     private Rect populationRect;
     private float radius;
     private SafeArea safeArea;
     private float safeAreaChangePeriod = 20;
     private float populatePeriod = .5f;
-    private float chanceOfPopulate = .5f;
+    private float chanceOfPopulate = 1f;
     private int countDownToDanger;
 
     public ObstaclePopulater(Rect populationRect) {

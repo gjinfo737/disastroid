@@ -31,6 +31,7 @@ public class PlayPresenter implements ITickerTimerListener {
     private Leveler leveler;
     private ObstaclePopulater obstaclePopulater;
     private List<Explosion> explosions = new ArrayList<Explosion>();
+    private boolean isPaused = true;
 
     public PlayPresenter(Activity activity) {
 	this.activity = activity;
@@ -39,6 +40,7 @@ public class PlayPresenter implements ITickerTimerListener {
 
 	Toast.makeText(this.activity, "Loading...", Toast.LENGTH_LONG).show();
 	initializeAfterDelay();
+	view.showPaused(isPaused);
     }
 
     private void initializeAfterDelay() {
@@ -130,25 +132,51 @@ public class PlayPresenter implements ITickerTimerListener {
 	explosions.add(new Explosion(obstacle.getCenter()));
 
 	if (ship.isDead()) {
-	    onPause();
-	    activity.runOnUiThread(new Runnable() {
-		public void run() {
-		    Toast.makeText(activity, "Game over!", Toast.LENGTH_SHORT).show();
-		}
-	    });
+	    gameOver();
 	}
     }
 
+    private void gameOver() {
+	onPause();
+	activity.runOnUiThread(new Runnable() {
+	    public void run() {
+		view.gameOver();
+		Toast.makeText(activity, "Game over!", Toast.LENGTH_SHORT).show();
+	    }
+	});
+
+    }
+
     public void onResume() {
-	this.tickerTimer.start();
+	view.showPaused(isPaused);
     }
 
     public void onPause() {
+	pause();
+    }
+
+    private void resume() {
+	this.isPaused = false;
+	this.tickerTimer.start();
+	view.showPaused(isPaused);
+    }
+
+    private void pause() {
+	this.isPaused = true;
 	this.tickerTimer.stop();
+	view.showPaused(isPaused);
     }
 
     public void onTap() {
 	this.ship.changeRotation();
     }
 
+    public void togglePause() {
+	this.isPaused = !this.isPaused;
+	if (this.isPaused) {
+	    pause();
+	} else {
+	    resume();
+	}
+    }
 }

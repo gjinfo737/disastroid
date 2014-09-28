@@ -23,7 +23,7 @@ public class Obstacle {
     public final float MIN_ZOOM_SPD = 1f;
     public final float MAX_ZOOM_SPD = 10f;
     public final int ANGLE_DELTA_FOR_HIT = 3;
-    public final float DEFAULT_DMG = 1f;
+    public final float DEFAULT_DMG = 10f;
     private float angle;
     private int level;
 
